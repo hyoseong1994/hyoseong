@@ -1,5 +1,3 @@
-효성이바보
-
 package model;
 
 public class JoinVO {
