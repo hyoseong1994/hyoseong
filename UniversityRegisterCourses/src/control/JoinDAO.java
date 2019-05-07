@@ -28,16 +28,16 @@ public class JoinDAO {
 			
 			if (i == 1) {
 				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("°ü¸®ÀÚ µî·Ï");
-				alert.setHeaderText(jvo.getName()+"°ü¸®ÀÚ µî·Ï ¿Ï·á");
-				alert.setContentText("°ü¸®ÀÚ µî·Ï ¼º°ø!!!");
+				alert.setTitle("ê´€ë¦¬ì ë“±ë¡");
+				alert.setHeaderText(jvo.getName()+"ê´€ë¦¬ì ë“±ë¡ ì™„ë£Œ");
+				alert.setContentText("ê´€ë¦¬ì ë“±ë¡ ì„±ê³µ!!!");
 				alert.showAndWait();
 				joinSucess = true;
 			}else {
 				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("°ü¸®ÀÚ µî·Ï");
-				alert.setHeaderText("°ü¸®ÀÚ µî·Ï ½ÇÆĞ");
-				alert.setContentText("°ü¸®ÀÚ µî·Ï ½ÇÆĞ!!!");
+				alert.setTitle("ê´€ë¦¬ì ë“±ë¡");
+				alert.setHeaderText("ê´€ë¦¬ì ë“±ë¡ ì‹¤íŒ¨");
+				alert.setContentText("ê´€ë¦¬ì ë“±ë¡ ì‹¤íŒ¨!!!");
 				alert.showAndWait();
 			}
 		} catch (SQLException e) {
@@ -48,7 +48,7 @@ public class JoinDAO {
 			System.out.println("e=["+e+"]");
 		}finally {
 			try {
-				//6 µ¥ÀÌÅÍ º£ÀÌ½º¿ÍÀÇ ¿¬°á¿¡ »ç¿ëµÇ¾ú´ø ¿ÀºêÁ§Æ®¸¦ ÇØÁ¦
+				//6 ë°ì´í„° ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°ì— ì‚¬ìš©ë˜ì—ˆë˜ ì˜¤ë¸Œì íŠ¸ë¥¼ í•´ì œ
 				if(pstmt != null) {
 					pstmt.close();
 				}if (con != null) {
@@ -60,21 +60,21 @@ public class JoinDAO {
 		return joinSucess;
 	}
 	
-	//¾ÆÀÌµğ Áßº¹ Ã¼Å©
+	//ì•„ì´ë”” ì¤‘ë³µ ì²´í¬
 	public boolean getidOverlap(String idOverlap) throws Exception {
 
 		String sql = "select*from managerjoin where id = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		boolean joinSucess = false;
+		boolean idOverlapResult = false;
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, idOverlap);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				idOverlapResult = true; //Áßº¹µÈ ¾ÆÀÌµğ°¡ ÀÖ´Ù.
+				idOverlapResult = true; //ì¤‘ë³µëœ ì•„ì´ë””ê°€ ìˆë‹¤.
 			}
 			
 		} catch (SQLException e) {
@@ -85,7 +85,7 @@ public class JoinDAO {
 			System.out.println("e=["+e+"]");
 		}finally {
 			try {
-				//6 µ¥ÀÌÅÍ º£ÀÌ½º¿ÍÀÇ ¿¬°á¿¡ »ç¿ëµÇ¾ú´ø ¿ÀºêÁ§Æ®¸¦ ÇØÁ¦
+				//6 ë°ì´í„° ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°ì— ì‚¬ìš©ë˜ì—ˆë˜ ì˜¤ë¸Œì íŠ¸ë¥¼ í•´ì œ
 				if (rs != null) {
 					rs.close();
 				}if(pstmt != null) {
