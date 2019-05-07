@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
-<<<<<<< HEAD
-encoding/<project>=UTF-8
-=======
+encoding//src/control=UTF-8
+encoding//src/control/DBUtil.java=UTF-8
+encoding//src/control/JoinController.java=UTF-8
+encoding//src/control/JoinDAO.java=UTF-8
 encoding//src/control/StudentTabController.java=UTF-8
->>>>>>> 8d236702ca02298241671636853ad0d85907bd45
+encoding//src/model=UTF-8
