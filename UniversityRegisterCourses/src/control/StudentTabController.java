@@ -23,216 +23,216 @@ import model.SubjectVO;
 
 public class StudentTabController implements Initializable {
 
-	// ÇĞ»ı µî·Ï ÅÇ
+   // í•™ìƒ ë“±ë¡ íƒ­
 
-	@FXML
-	private ComboBox<SubjectVO> cbx_subjectName;
-	@FXML
-	private TextField txtsd_num;
-	@FXML
-	private TextField txtsd_name; // ÀÌ¸§
-	@FXML
-	private TextField txtsd_id; // ¾ÆÀÌµğ
-	@FXML
-	private PasswordField txtsd_passwd; // ¾ÏÈ£
-	@FXML
-	private TextField txtsd_birthday; // »ı³â¿ùÀÏ
-	@FXML
-	private TextField txtsd_phone; // ÈŞ´ëÆù¹øÈ£
-	@FXML
-	private TextField txtsd_address; // ÁÖ¼Ò
-	@FXML
-	private TextField txtsd_email; // ÀÌ¸ŞÀÏ
-	@FXML
-	private Button btnIdCheck; // ¾ÆÀÌµğÃ¼Å©
-	@FXML
-	private Button btnStudentInsert; // ÇĞ»ıµî·Ï
-	@FXML
-	private Button btnStudentUpdate; // ÇĞ»ıÁ¤º¸¼öÁ¤
-	@FXML
-	private Button btnStudentInit; // ÃÊ±âÈ­
-	@FXML
-	private Button btnStudentTatoList; // ÇĞ»ı ÀüÃ¼ ¸ñ·Ï
-	@FXML
-	private TableView<StudentVO> studentTableView = new TableView<>();
+   @FXML
+   private ComboBox<SubjectVO> cbx_subjectName;
+   @FXML
+   private TextField txtsd_num;
+   @FXML
+   private TextField txtsd_name; // ì´ë¦„
+   @FXML
+   private TextField txtsd_id; // ì•„ì´ë””
+   @FXML
+   private PasswordField txtsd_passwd; // ì•”í˜¸
+   @FXML
+   private TextField txtsd_birthday; // ìƒë…„ì›”ì¼
+   @FXML
+   private TextField txtsd_phone; // íœ´ëŒ€í°ë²ˆí˜¸
+   @FXML
+   private TextField txtsd_address; // ì£¼ì†Œ
+   @FXML
+   private TextField txtsd_email; // ì´ë©”ì¼
+   @FXML
+   private Button btnIdCheck; // ì•„ì´ë””ì²´í¬
+   @FXML
+   private Button btnStudentInsert; // í•™ìƒë“±ë¡
+   @FXML
+   private Button btnStudentUpdate; // í•™ìƒì •ë³´ìˆ˜ì •
+   @FXML
+   private Button btnStudentInit; // ì´ˆê¸°í™”
+   @FXML
+   private Button btnStudentTatoList; // í•™ìƒ ì „ì²´ ëª©ë¡
+   @FXML
+   private TableView<StudentVO> studentTableView = new TableView<>();
 
-	ObservableList<StudentVO> studentDataList = FXCollections.observableArrayList();
-	ObservableList<StudentVO> selectStudent = null; // ÇĞ»ıµî·Ï Å×ÀÌºí¿¡¼­ ¼±ÅÃÇÑ Á¤º¸ ÀúÀå
-	int selectedStudentIndex; // ÇĞ»ıµî·Ï ÅÇ¿¡¼­ ¼±ÅÃÇÑ ÇĞ°ú Á¤º¸ ÀÎµ¦½º ÀúÀå
-	String studentNumber = "";
-	private String selectSubjectNum;; // ¼±ÅÃÇÑ ÇĞ°ú¸íÀÇ ÇĞ°úÄÚµå
+   ObservableList<StudentVO> studentDataList = FXCollections.observableArrayList();
+   ObservableList<StudentVO> selectStudent = null; // í•™ìƒë“±ë¡ í…Œì´ë¸”ì—ì„œ ì„ íƒí•œ ì •ë³´ ì €ì¥
+   int selectedStudentIndex; // í•™ìƒë“±ë¡ íƒ­ì—ì„œ ì„ íƒí•œ í•™ê³¼ ì •ë³´ ì¸ë±ìŠ¤ ì €ì¥
+   String studentNumber = "";
+   private String selectSubjectNum;; // ì„ íƒí•œ í•™ê³¼ëª…ì˜ í•™ê³¼ì½”ë“œ
 
-	public void initialize(URL location, ResourceBundle resources) {
-		try {
-			// ÇĞ»ıµî·Ï ÃÊ±âÈ­
-			btnStudentInsert.setDisable(true);
-			btnStudentUpdate.setDisable(true);
-			btnStudentInit.setDisable(true);
-			studentTableView.setEditable(false);
+   public void initialize(URL location, ResourceBundle resources) {
+      try {
+         // í•™ìƒë“±ë¡ ì´ˆê¸°í™”
+         btnStudentInsert.setDisable(true);
+         btnStudentUpdate.setDisable(true);
+         btnStudentInit.setDisable(true);
+         studentTableView.setEditable(false);
 
-			// ÇĞ¹ø ¼öÁ¤ ±İÁö
-			txtsd_num.setEditable(false);
+         // í•™ë²ˆ ìˆ˜ì • ê¸ˆì§€
+         txtsd_num.setEditable(false);
 
-			// ÇĞ»ı Å×ÀÌºí ºä ÄÃ·³ÀÌ¸§ ¼³Á¤
-			@SuppressWarnings("rawtypes")
-			TableColumn colStudentNo = new TableColumn("NO.");
-			colStudentNo.setPrefWidth(30);
-			colStudentNo.setStyle("fx-allignment:CENTER");
-			colStudentNo.setCellValueFactory(new PropertyValueFactory<>("no"));
+         // í•™ìƒ í…Œì´ë¸” ë·° ì»¬ëŸ¼ì´ë¦„ ì„¤ì •
+         @SuppressWarnings("rawtypes")
+         TableColumn colStudentNo = new TableColumn("NO.");
+         colStudentNo.setPrefWidth(30);
+         colStudentNo.setStyle("fx-allignment:CENTER");
+         colStudentNo.setCellValueFactory(new PropertyValueFactory<>("no"));
 
-			TableColumn colStudentNum = new TableColumn("ÇĞ¹ø");
-			colStudentNum.setPrefWidth(70);
-			colStudentNum.setStyle("-fx-allignment:CENTER");
-			colStudentNum.setCellValueFactory(new PropertyValueFactory<>("sd_num"));
+         TableColumn colStudentNum = new TableColumn("í•™ë²ˆ");
+         colStudentNum.setPrefWidth(70);
+         colStudentNum.setStyle("-fx-allignment:CENTER");
+         colStudentNum.setCellValueFactory(new PropertyValueFactory<>("sd_num"));
 
-			TableColumn colStudentName = new TableColumn("ÀÌ¸§");
-			colStudentName.setPrefWidth(80);
-			colStudentName.setStyle("-fx-allignment:CENTER");
-			colStudentName.setCellValueFactory(new PropertyValueFactory<>("sd_name"));
+         TableColumn colStudentName = new TableColumn("ì´ë¦„");
+         colStudentName.setPrefWidth(80);
+         colStudentName.setStyle("-fx-allignment:CENTER");
+         colStudentName.setCellValueFactory(new PropertyValueFactory<>("sd_name"));
 
-			TableColumn colStudentId = new TableColumn("¾ÆÀÌµğ");
-			colStudentId.setPrefWidth(80);
-			colStudentId.setStyle("-fx-allignment:CENTER");
-			colStudentId.setCellValueFactory(new PropertyValueFactory<>("sd_id"));
+         TableColumn colStudentId = new TableColumn("ì•„ì´ë””");
+         colStudentId.setPrefWidth(80);
+         colStudentId.setStyle("-fx-allignment:CENTER");
+         colStudentId.setCellValueFactory(new PropertyValueFactory<>("sd_id"));
 
-			TableColumn colStudentPassword = new TableColumn("ºñ¹Ğ¹øÈ£");
-			colStudentPassword.setPrefWidth(80);
-			colStudentPassword.setStyle("-fx-allignment:CENTER");
-			colStudentPassword.setCellValueFactory(new PropertyValueFactory<>("sd_passwd"));
+         TableColumn colStudentPassword = new TableColumn("ë¹„ë°€ë²ˆí˜¸");
+         colStudentPassword.setPrefWidth(80);
+         colStudentPassword.setStyle("-fx-allignment:CENTER");
+         colStudentPassword.setCellValueFactory(new PropertyValueFactory<>("sd_passwd"));
 
-			TableColumn colSubjectNum = new TableColumn("ÇĞ°ú¸í");
-			colSubjectNum.setPrefWidth(70);
-			colSubjectNum.setStyle("-fx-allignment:CENTER");
-			colSubjectNum.setCellValueFactory(new PropertyValueFactory<>("s_num"));
+         TableColumn colSubjectNum = new TableColumn("í•™ê³¼ëª…");
+         colSubjectNum.setPrefWidth(70);
+         colSubjectNum.setStyle("-fx-allignment:CENTER");
+         colSubjectNum.setCellValueFactory(new PropertyValueFactory<>("s_num"));
 
-			TableColumn ColStudentBirthday = new TableColumn("»ı³â¿ùÀÏ");
-			ColStudentBirthday.setPrefWidth(80);
-			ColStudentBirthday.setStyle("-fx-allignment:CENTER");
-			ColStudentBirthday.setCellValueFactory(new PropertyValueFactory<>("sd_birthday"));
+         TableColumn ColStudentBirthday = new TableColumn("ìƒë…„ì›”ì¼");
+         ColStudentBirthday.setPrefWidth(80);
+         ColStudentBirthday.setStyle("-fx-allignment:CENTER");
+         ColStudentBirthday.setCellValueFactory(new PropertyValueFactory<>("sd_birthday"));
 
-			TableColumn ColStudentPhone = new TableColumn("¿¬¶ôÃ³");
-			ColStudentPhone.setPrefWidth(80);
-			ColStudentPhone.setStyle("-fx-allignment:CENTER");
-			ColStudentPhone.setCellValueFactory(new PropertyValueFactory<>("sd_phone"));
+         TableColumn ColStudentPhone = new TableColumn("ì—°ë½ì²˜");
+         ColStudentPhone.setPrefWidth(80);
+         ColStudentPhone.setStyle("-fx-allignment:CENTER");
+         ColStudentPhone.setCellValueFactory(new PropertyValueFactory<>("sd_phone"));
 
-			TableColumn ColStudentAddress = new TableColumn("ÁÖ¼Ò");
-			ColStudentAddress.setPrefWidth(150);
-			ColStudentAddress.setStyle("-fx-allignment:CENTER");
-			ColStudentAddress.setCellValueFactory(new PropertyValueFactory<>("sd_address"));
+         TableColumn ColStudentAddress = new TableColumn("ì£¼ì†Œ");
+         ColStudentAddress.setPrefWidth(150);
+         ColStudentAddress.setStyle("-fx-allignment:CENTER");
+         ColStudentAddress.setCellValueFactory(new PropertyValueFactory<>("sd_address"));
 
-			TableColumn ColStudentEmail = new TableColumn("ÀÌ¸ŞÀÏ");
-			ColStudentEmail.setPrefWidth(80);
-			ColStudentEmail.setStyle("-fx-allignment:CENTER");
-			ColStudentEmail.setCellValueFactory(new PropertyValueFactory<>("sd_email"));
+         TableColumn ColStudentEmail = new TableColumn("ì´ë©”ì¼");
+         ColStudentEmail.setPrefWidth(80);
+         ColStudentEmail.setStyle("-fx-allignment:CENTER");
+         ColStudentEmail.setCellValueFactory(new PropertyValueFactory<>("sd_email"));
 
-			TableColumn colStudentDate = new TableColumn("µî·ÏÀÏ");
-			colStudentDate.setPrefWidth(80);
-			colStudentDate.setStyle("-fx-allignment:CENTER");
-			colStudentDate.setCellValueFactory(new PropertyValueFactory<>("sd_date"));
+         TableColumn colStudentDate = new TableColumn("ë“±ë¡ì¼");
+         colStudentDate.setPrefWidth(80);
+         colStudentDate.setStyle("-fx-allignment:CENTER");
+         colStudentDate.setCellValueFactory(new PropertyValueFactory<>("sd_date"));
 
-			studentTableView.setItems(studentDataList);
-			studentTableView.getColumns().addAll(colStudentNo, colStudentNum, colStudentName, colStudentId,
-					colStudentPassword, colSubjectNum, ColStudentBirthday, ColStudentPhone, ColStudentAddress,
-					ColStudentEmail, colStudentDate);
+         studentTableView.setItems(studentDataList);
+         studentTableView.getColumns().addAll(colStudentNo, colStudentNum, colStudentName, colStudentId,
+               colStudentPassword, colSubjectNum, ColStudentBirthday, ColStudentPhone, ColStudentAddress,
+               ColStudentEmail, colStudentDate);
 
-			// ÇĞ»ı ÀüÃ¼ ¸ñ·Ï
+         // í•™ìƒ ì „ì²´ ëª©ë¡
 
-			studentTotalList();
+         studentTotalList();
 
-			// Ãß°¡µÈ ÇĞ°ú¸í È£Ãâ
-			// addSubjectName();
+         // ì¶”ê°€ëœ í•™ê³¼ëª… í˜¸ì¶œ
+         // addSubjectName();
 
-			btnStudentInsert.setOnAction(event -> handlerBtnStudentInsertAction(event));
-			cbx_subjectName.setOnAction(event -> HandlerCbx_subjectNameAction(event));
-			btnIdCheck.setOnAction(event -> handlerBtnIdCheckActio(event));
-			studentTableView.setOnMouseClicked(event -> handlerStudentTableViewAction(event));
-			btnStudentUpdate.setOnAction(event -> handlerBtnStudentUpdateAction(event));
-			btnStudentInit.setOnAction(event -> handlerBtnStudentInitAction(event));
-			btnStudentTatoList.setOnAction(event -> handlerBtnStudentTatoListAction(event));
+         btnStudentInsert.setOnAction(event -> handlerBtnStudentInsertAction(event));
+         cbx_subjectName.setOnAction(event -> HandlerCbx_subjectNameAction(event));
+         btnIdCheck.setOnAction(event -> handlerBtnIdCheckActio(event));
+         studentTableView.setOnMouseClicked(event -> handlerStudentTableViewAction(event));
+         btnStudentUpdate.setOnAction(event -> handlerBtnStudentUpdateAction(event));
+         btnStudentInit.setOnAction(event -> handlerBtnStudentInitAction(event));
+         btnStudentTatoList.setOnAction(event -> handlerBtnStudentTatoListAction(event));
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
 
-	}
+   }
 
-	// ÇĞ»ı ÀüÃ¼ ¸ñ·Ï ÀÌº¥Æ®
+   // í•™ìƒ ì „ì²´ ëª©ë¡ ì´ë²¤íŠ¸
 
-	public void handlerBtnStudentTatoListAction(ActionEvent event) {
-		try {
-			studentDataList.removeAll(studentDataList);
-			studentTotalList();
-		} catch (Exception e) {
-			e.printStackTrace(); // ¿¡·¯ ¸Ş¼¼ÁöÀÇ ¹ß»ı ±Ù¿øÁö¸¦ Ã£¾Æ¼­ ´Ü°èº°·Î ¿¡·¯¸¦ Ãâ·ÂÇÑ´Ù.
-		}
-	}
+   public void handlerBtnStudentTatoListAction(ActionEvent event) {
+      try {
+         studentDataList.removeAll(studentDataList);
+         studentTotalList();
+      } catch (Exception e) {
+         e.printStackTrace(); // ì—ëŸ¬ ë©”ì„¸ì§€ì˜ ë°œìƒ ê·¼ì›ì§€ë¥¼ ì°¾ì•„ì„œ ë‹¨ê³„ë³„ë¡œ ì—ëŸ¬ë¥¼ ì¶œë ¥í•œë‹¤.
+      }
+   }
 
-	// ÇĞ»ı ÃÊ±âÈ­ ÀÌº¥Æ®
-	public void handlerBtnStudentInitAction(ActionEvent event) {
-		try {
-			studentDataList.removeAll(studentDataList);
-			studentTotalList();
+   // í•™ìƒ ì´ˆê¸°í™” ì´ë²¤íŠ¸
+   public void handlerBtnStudentInitAction(ActionEvent event) {
+      try {
+         studentDataList.removeAll(studentDataList);
+         studentTotalList();
 
-			txtsd_num.clear();
-			txtsd_name.clear();
-			txtsd_id.clear();
-			txtsd_passwd.clear();
-			txtsd_birthday.clear();
-			txtsd_phone.clear();
-			txtsd_address.clear();
-			txtsd_email.clear();
+         txtsd_num.clear();
+         txtsd_name.clear();
+         txtsd_id.clear();
+         txtsd_passwd.clear();
+         txtsd_birthday.clear();
+         txtsd_phone.clear();
+         txtsd_address.clear();
+         txtsd_email.clear();
 
-			txtsd_num.setEditable(true);
-			txtsd_name.setEditable(true);
-			txtsd_id.setEditable(true);
+         txtsd_num.setEditable(true);
+         txtsd_name.setEditable(true);
+         txtsd_id.setEditable(true);
 
-			btnIdCheck.setDisable(false);
-			cbx_subjectName.setDisable(false);
-			btnStudentUpdate.setDisable(true);
-			btnStudentInit.setDisable(true);
-			btnStudentInsert.setDisable(true);
+         btnIdCheck.setDisable(false);
+         cbx_subjectName.setDisable(false);
+         btnStudentUpdate.setDisable(true);
+         btnStudentInit.setDisable(true);
+         btnStudentInsert.setDisable(true);
 
-		} catch (Exception e) {
-			e.printStackTrace(); // ¿¡·¯ ¸Ş¼¼ÁöÀÇ ¹ß»ı ±Ù¿øÁö¸¦ Ã£¾Æ¼­ ´Ü°èº°·Î ¿¡·¯¸¦ Ãâ·ÂÇÑ´Ù.
-		}
+      } catch (Exception e) {
+         e.printStackTrace(); // ì—ëŸ¬ ë©”ì„¸ì§€ì˜ ë°œìƒ ê·¼ì›ì§€ë¥¼ ì°¾ì•„ì„œ ë‹¨ê³„ë³„ë¡œ ì—ëŸ¬ë¥¼ ì¶œë ¥í•œë‹¤.
+      }
 
-	}
+   }
 
-	// ÇĞ»ı Á¤º¸ ¼öÁ¤ ÀÌº¥Æ®
-	public void handlerBtnStudentUpdateAction(ActionEvent event) {
-		try {
-			boolean sucess;
-			
-			StudentDAO sdao = new StudentDAO();
-			
-			
-		}
-		
-	}
+   // í•™ìƒ ì •ë³´ ìˆ˜ì • ì´ë²¤íŠ¸
+   public void handlerBtnStudentUpdateAction(ActionEvent event) {
+      try {
+         boolean sucess;
+         
+         StudentDAO sdao = new StudentDAO();
+         
+         
+      }
+      
+   }
 
-	private Object handlerStudentTableViewAction(MouseEvent event) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+   private Object handlerStudentTableViewAction(MouseEvent event) {
+      // TODO Auto-generated method stub
+      return null;
+   }
 
-	private Object handlerBtnIdCheckActio(ActionEvent event) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+   private Object handlerBtnIdCheckActio(ActionEvent event) {
+      // TODO Auto-generated method stub
+      return null;
+   }
 
-	private Object HandlerCbx_subjectNameAction(ActionEvent event) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+   private Object HandlerCbx_subjectNameAction(ActionEvent event) {
+      // TODO Auto-generated method stub
+      return null;
+   }
 
-	private Object handlerBtnStudentInsertAction(ActionEvent event) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+   private Object handlerBtnStudentInsertAction(ActionEvent event) {
+      // TODO Auto-generated method stub
+      return null;
+   }
 
-	private void studentTotalList() {
-		// TODO Auto-generated method stub
+   private void studentTotalList() {
+      // TODO Auto-generated method stub
 
-	}
+   }
 
 }
