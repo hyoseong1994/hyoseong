@@ -46,7 +46,7 @@
 				<Button fx:id="btnOverlap" text="아이디 중복 확인" />
 				<Button fx:id="btnJoin" text="등록" />
 				<Button fx:id="btnCancel" text="닫기" />
-				<!-- 수정test -->
+				
 			</HBox>
 		</children>
 	</VBox>
