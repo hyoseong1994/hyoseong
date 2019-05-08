@@ -1,6 +1,7 @@
 package control;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -17,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import model.LessonVO;
 
 public class LessonTabController implements Initializable {
@@ -78,6 +80,27 @@ public class LessonTabController implements Initializable {
 			lessonTableView.setOnMouseClicked(event -> handlerLessonTableViewAction(event));
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	// 과목 테이블 더블클릭 선택 이벤트 핸들러
+	public void handlerLessonTableViewAction(MouseEvent event) {
+		if (event.getClickCount() == 2) {
+			try {
+				selectLesson = lessonTableView.getSelectionModel().getSelectedItems();
+				selectedLessonIndex = selectLesson.get(0).getNo();
+				String selectedL_num = selectLesson.get(0).getL_num();
+				String selectedL_name = selectLesson.get(0).getL_name();
+
+				txtLessonNum.setText(selectedL_num);
+				txtLessonName.setText(selectedL_name);
+
+				btnLessonDelete.setDisable(false);
+				btnLessonUpdate.setDisable(false);
+				btnLessonInsert.setDefaultButton(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -176,8 +199,26 @@ public class LessonTabController implements Initializable {
 		}
 	}
 
-	public void lessonTotalList() {
-		// TODO Auto-generated method stub
+	// 과목 전체 목록
+	public void lessonTotalList() throws Exception {
+		lessonDataList.removeAll(lessonDataList);
+
+		LessonDAO lDao = new LessonDAO();
+		LessonVO lVo = null;
+
+		ArrayList<String> title;
+		ArrayList<LessonVO> list;
+
+		title = lDao.getLessonColumnName();
+		int columnCount = title.size();
+
+		list = lDao.getLessonTotalList();
+		int rowCount = title.size();
+
+		for (int index = 0; index < rowCount; index++) {
+			lVo = list.get(index);
+			lessonDataList.add(lVo);
+		}
 
 	}
 
