@@ -235,7 +235,7 @@ public class SubjectDAO {
 		return s_num;
 	}
 
-	public boolean getSubjectDelete(int no) {
+	public boolean getSubjectDelete(int no){
 		// TODO Auto-generated method stub
 		StringBuffer sql = new StringBuffer();
 		sql.append("delete from subject where no = ?");
