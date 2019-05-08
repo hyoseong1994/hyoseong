@@ -3,10 +3,14 @@ package control;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import model.StudentVO;
+import model.SubjectVO;
 
 public class StudentDAO {
 	// 로그인 학생이름
@@ -172,6 +176,263 @@ public class StudentDAO {
 		return serialNumber;
 
 	}
-//학생 아이디 중복 체크
 
+//학생 아이디 중복 체크
+	public boolean getStudentIdOverlap(String idOverlap) throws Exception {
+		String sql = "select*from student where sd_id = ?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean idOverlapResult = false;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, idOverlap);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				idOverlapResult = true; // 중복된 아이디가 있다.
+			}
+		} catch (SQLException e) {
+			System.out.println("e=[" + e + "]");
+		} catch (Exception e) {
+			System.out.println("e=[" + e + "]");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+
+			}
+		}
+		return idOverlapResult;
+	}
+
+	// 학생등록
+	public void getStudentRegiste(StudentVO svo) throws Exception {
+		String sql = "insert into student values" + "(Student_sql.nextval,?,?,?,?,?,?,?,?,?,sysdate)";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, svo.getSd_num());
+			pstmt.setString(2, svo.getSd_name());
+			pstmt.setString(3, svo.getSd_id());
+			pstmt.setString(4, svo.getSd_passwd());
+			pstmt.setString(5, svo.getSd_num());
+			pstmt.setString(6, svo.getSd_birthday());
+			pstmt.setString(7, svo.getSd_phone());
+			pstmt.setString(8, svo.getSd_address());
+			pstmt.setString(9, svo.getSd_email());
+
+			int i = pstmt.executeUpdate();
+
+			if (i == 1) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("학생등록");
+				alert.setHeaderText(svo.getSd_name() + "학생 등록 완료");
+				alert.setContentText("학생 등록 성공");
+				alert.showAndWait();
+			} else {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("학생등록");
+				alert.setHeaderText("학생등록실패");
+				alert.setContentText("학생 등록 실패");
+				alert.showAndWait();
+			}
+
+		} catch (SQLException e) {
+			System.out.println("e=[" + e + "]");
+		} catch (Exception e) {
+			System.out.println("e=[" + e + "]");
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
+		}
+
+	}
+
+	// 데이터베이스에서 학생 테이블의 컬럼의 갯수
+	public ArrayList<String> getStudentColumnName() throws Exception {
+		ArrayList<String> columnName = new ArrayList<String>();
+
+		String sql = "select*from student order by no";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		// ResultSetMetaData 객체 변수 선언
+		ResultSetMetaData rsmd = null;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rsmd = rs.getMetaData();
+			int cols = rsmd.getColumnCount();
+			for (int i = 1; i <= cols; i++) {
+				columnName.add(rsmd.getCatalogName(i));
+			}
+		} catch (SQLException se) {
+			System.out.println(se);
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException se) {
+
+			}
+		}
+		return columnName;
+	}
+
+	// 학생 정보 수정
+	public boolean getStudentUpdate(int no, String sd_passwd, String sd_birthday, String sd_phone, String sd_address,
+			String sd_email) throws Exception {
+		String sql = "update student set sd_passwd=?,sd_birthday=? , sd_phone=? , sd_address=?, sd_email=? where no=?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		boolean studentUpateSucess = false;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, sd_passwd);
+			pstmt.setString(2, sd_birthday);
+			pstmt.setString(3, sd_phone);
+			pstmt.setString(4, sd_address);
+			pstmt.setString(5, sd_email);
+			pstmt.setInt(6, no);
+
+			int i = pstmt.executeUpdate();
+
+			if (i == i) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("학생 정보 수정");
+				alert.setHeaderText(no + "학생 정보 수정 완료");
+				alert.setContentText("학생 정보 수정 성공!!");
+				alert.showAndWait();
+				studentUpateSucess = true;
+			} else {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("학생 정보 수정");
+				alert.setHeaderText("학생 정보 수정 실패");
+				alert.setContentText("학생 정보 수정 실패");
+				alert.showAndWait();
+			}
+		} catch (SQLException e) {
+			System.out.println("e=[" + e + "]");
+		} catch (Exception e) {
+			System.out.println("e=[" + e + "]");
+		} finally {
+			try {
+				// 데이터 베이스와의 연결에 사용되었던 오브젝트를 해제
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+
+			}
+		}
+		return studentUpateSucess;
+	}
+
+	// 학생 정보 삭제
+	public boolean getStudentDelete(int no) throws Exception {
+		StringBuffer sql = new StringBuffer();
+		sql.append("delete from student where no = ?");
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		boolean studentDeleteSucess = false;
+		try {
+			con = DBUtil.getConnection();
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, no);
+
+			int i = pstmt.executeUpdate();
+			if (i == 1) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("학생 정보 삭제");
+				alert.setHeaderText("학생 정보 삭제 완료");
+				alert.setContentText("학생 정보 삭제 성공!!!");
+				alert.showAndWait();
+				studentDeleteSucess = true;
+			} else {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("학생 정보 삭제");
+				alert.setHeaderText("학생 정보 삭제 실패");
+				alert.setContentText("학생 정보 삭제 실패!!!");
+				alert.showAndWait();
+			}
+
+		} catch (SQLException e) {
+			System.out.println("e=[" + e + "]");
+
+		} catch (Exception e) {
+			System.out.println("e=[" + e + "]");
+		} finally {
+			try {
+				// 데이터베이스와의 연결에 사용되었던 오브젝트를 해제
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
+		}
+		return studentDeleteSucess;
+	}
+
+	// 학과목록
+	public ArrayList<SubjectVO> subjectTotalList() throws Exception {
+		ArrayList<SubjectVO> list = new ArrayList<>();
+		String sql = "select s_name from subject order by no";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		SubjectVO sVo = null;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				sVo = new SubjectVO();
+				sVo.setS_num(rs.getString("s_name"));
+				list.add(sVo);
+			}
+		} catch (SQLException se) {
+			System.out.println(se);
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException se) {
+
+			}
+		}
+		return list;
+	}
 }

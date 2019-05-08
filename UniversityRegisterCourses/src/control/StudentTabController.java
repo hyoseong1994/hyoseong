@@ -24,6 +24,7 @@ import model.SubjectVO;
 public class StudentTabController implements Initializable {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
    // 학생 등록 탭
 
    @FXML
@@ -231,13 +232,15 @@ public class StudentTabController implements Initializable {
       return null;
    }
 
-   private void studentTotalList() {
+   void studentTotalList() {
       // TODO Auto-generated method stub
 
    }
 
 }
 =======
+=======
+>>>>>>> 947d6ce2d0580736ffa28c73f4f99a1f0cd53f23
 	// 학생 등록 탭
 
 	@FXML
@@ -415,15 +418,15 @@ public class StudentTabController implements Initializable {
 
 	// 학생 정보 수정 이벤트
 	public void handlerBtnStudentUpdateAction(ActionEvent event) {
-		try {
-			boolean sucess;
-			
-			StudentDAO sdao = new StudentDAO();
-			
-			
-		}
-		
-	}
+      try {
+         boolean sucess;
+         
+         StudentDAO sdao = new StudentDAO();
+         
+         
+      }catch() {}
+      
+   }
 
 	private Object handlerStudentTableViewAction(MouseEvent event) {
 		// TODO Auto-generated method stub
@@ -450,5 +453,4 @@ public class StudentTabController implements Initializable {
 
 	}
 
-}
->>>>>>> b77db4485b340953a2185a82e69e5fc1107262b6
+	}

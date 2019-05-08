@@ -151,7 +151,7 @@ public class JoinController implements Initializable {
 			txtPassword.clear();
 			txtPasswordRepeat.clear();
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("파스워드, 이름 확인");
+			alert.setTitle("패스워드, 이름 확인");
 			alert.setHeaderText("패스워드, 이름 확인 검사에 오류가 발생하였습니다.");
 			alert.setContentText("패스워드와 이름을 다시 입력하세요.");
 			alert.showAndWait();
