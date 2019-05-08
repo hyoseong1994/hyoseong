@@ -231,7 +231,7 @@ public class StudentTabController implements Initializable {
       return null;
    }
 
-   private void studentTotalList() {
+   void studentTotalList() {
       // TODO Auto-generated method stub
 
    }
