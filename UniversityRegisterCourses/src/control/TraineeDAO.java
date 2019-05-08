@@ -1,5 +1,192 @@
 package control;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import model.StudentVO;
+import model.TraineeVO;
+
 public class TraineeDAO {
+	// 로그인한 학생의 정보
+	public StudentVO getStudentSubjectName(String sd_id) throws Exception {
+
+		String sql = "select sd_num , sd_name,(select s_name from subject where s_num =(select s_num from student where sd_id=?))as s_num from student where sd_id=?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StudentVO studentInfo = null;
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, sd_id);
+			pstmt.setString(2, sd_id);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				studentInfo = new StudentVO();
+				studentInfo.setSd_num(rs.getString("sd_num"));
+				studentInfo.setSd_name(rs.getString("sd_name"));
+				studentInfo.setSd_num(rs.getString("s_num"));
+			}
+		} catch (SQLException se) {
+			System.out.println(se);
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException se) {
+
+			}
+		}
+		return studentInfo;
+	}
+
+	// 선택한 과목명의 과목 번호
+	public String getLessonNum(String lessonName) throws Exception {
+		String l_num = "";
+
+		String sql = "select l_num from lesson where l_name";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		// Connection.prepareStatement 메소드를 호출하여 PreparedStatement 오브젝트를 작성.
+		// PreparedStatement.setXXX 메소드를 호출하여 입력 매개변수에 값을 전달.
+		// PreparedStatement.executeQuery 메소드를 호출하여 ResultSet 오브젝트에서 SELECT문으로 결과 테이블
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, lessonName);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				l_num = rs.getString("l_num");
+			} else {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("수강 과목의 과목 번호");
+				alert.setHeaderText("선택한" + lessonName + "과 없습니다.");
+				alert.setContentText("과목 검색 실패");
+				alert.showAndWait();
+
+			}
+		} catch (SQLException se) {
+			System.out.println(se);
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException se) {
+
+			}
+		}
+		return l_num;
+	}
+
+	// 수강 신청
+
+	public void getTraineeRegiste(TraineeVO tvo) throws Exception {
+		String sql = "insert into trainee" + "(no,sd_num, l_num, t_section, t_date)" + "values"
+				+ "(trainee_seq.nextval,?.?,?sysdate)";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, tvo.getSd_num());
+			pstmt.setString(2, tvo.getL_num());
+			pstmt.setString(3, tvo.getT_section());
+
+			int i = pstmt.executeUpdate();
+
+			if (i == 1) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("수강 신청");
+				alert.setHeaderText("수강 신청 완료");
+				alert.setContentText("수강 신청 성공!!");
+				alert.showAndWait();
+
+			} else {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("수강 신청");
+				alert.setHeaderText("수강 신청 실패");
+				alert.setContentText("수강 신청 실패!!");
+				alert.showAndWait();
+			}
+
+		} catch (SQLException e) {
+			System.out.println("e=[" + e + "]");
+		} catch (Exception e) {
+			System.out.println("e=[" + e + "]");
+		} finally {
+			try {
+				// 오브젝트 해제
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+
+			}
+		}
+	}
+
+//로그인 한 학생 수강 신청 전체 목록 (학번으로 검색)
+	public ArrayList<TraineeVO> getTraineeTotalList(String sd_num) throws Exception {
+		ArrayList<TraineeVO> list = new ArrayList<>();
+
+		String sql = "select tr.no as no , sd_num, le.l_name as l_num, t_section,t_date " + "from trainee tr, lesson le"
+				+ "where tr.l_num=le.l_num and tr.sd_num=?" + "ordet by t_date";
+		Connection con = null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		TraineeVO tVo= null;
+		
+		//Connection.prepareStatement 메소드를 호출하여 PreparedStatement 오브젝트를 작성.
+		//PreparedStatement.setXXX 메소드를 호출하여 입력 매개변수에 값을 전달.
+		//PreparedStatement.executeQuery 메소드를 호출하여 ResultSet 오브젝트에서 SELECT문으로 결과 테이블을 확보.
+		
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, sd_num);
+			rs=pstmt.executeQuery();
+			
+		}
+		
+	}
+
+	public ArrayList<String> getTraineeColumnName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<TraineeVO> getTraineeTotalList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<TraineeVO> getTraineeSubjectSearchList(String searchName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

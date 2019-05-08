@@ -1,6 +1,9 @@
 package control;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import javax.jws.HandlerChain;
@@ -10,6 +13,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
@@ -156,6 +161,15 @@ public class StudentTabController implements Initializable {
 
 	}
 
+	public void addSubjectName() throws Exception {
+		StudentDAO sDao = new StudentDAO();
+		ArrayList subjetNameList = new ArrayList<>();
+		subjetNameList = sDao.subjectTotalList();
+		// 학생 등록 탭 학과 번호 콤보 값 설정
+		cbx_subjectName.setItems(FXCollections.observableArrayList(subjetNameList));
+
+	}
+
 	// 학생 전체 목록 이벤트
 
 	public void handlerBtnStudentTatoListAction(ActionEvent event) {
@@ -200,39 +214,225 @@ public class StudentTabController implements Initializable {
 
 	// 학생 정보 수정 이벤트
 	public void handlerBtnStudentUpdateAction(ActionEvent event) {
-      try {
-         boolean sucess;
-         
-         StudentDAO sdao = new StudentDAO();
-         
-         
-      }catch() {}
-      
-   }
+		try {
+			boolean sucess;
 
-	private Object handlerStudentTableViewAction(MouseEvent event) {
-		// TODO Auto-generated method stub
-		return null;
+			StudentDAO sdao = new StudentDAO();
+			sucess = sdao.getStudentUpdate(selectedStudentIndex, txtsd_passwd.getText().trim(),
+					txtsd_birthday.getText().trim(), txtsd_phone.getText().trim(), txtsd_address.getText().trim(),
+					txtsd_email.getText().trim());
+			if (sucess) {
+				studentDataList.removeAll(studentDataList);
+				studentTotalList();
+
+				txtsd_num.clear();
+				txtsd_name.clear();
+				txtsd_id.clear();
+				txtsd_passwd.clear();
+				txtsd_birthday.clear();
+				txtsd_phone.clear();
+				txtsd_address.clear();
+				txtsd_email.clear();
+
+				txtsd_num.setEditable(true);
+				txtsd_name.setEditable(true);
+				txtsd_id.setEditable(true);
+
+				btnIdCheck.setDisable(false);
+				cbx_subjectName.setDisable(false);
+				btnStudentUpdate.setDisable(true);
+				btnStudentInit.setDisable(true);
+				btnStudentInsert.setDisable(true);
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
-	private Object handlerBtnIdCheckActio(ActionEvent event) {
-		// TODO Auto-generated method stub
-		return null;
+	// 학생 테이블 뷰 더블 클릭 이벤트 핸들러
+	public void handlerStudentTableViewAction(MouseEvent event) {
+		if (event.getClickCount() == 2) {
+			try {
+				selectStudent = studentTableView.getSelectionModel().getSelectedItems();
+				selectedStudentIndex = selectStudent.get(0).getNo();
+				String selectedSd_num = selectStudent.get(0).getSd_num();
+				String selectedSd_name = selectStudent.get(0).getSd_name();
+				String selectedSd_id = selectStudent.get(0).getSd_id();
+				String selectedSd_passwd = selectStudent.get(0).getSd_passwd();
+				String selectedSd_birthday = selectStudent.get(0).getSd_birthday();
+				String selectedSd_phone = selectStudent.get(0).getSd_phone();
+				String selectedSd_address = selectStudent.get(0).getSd_address();
+				String selectedSd_email = selectStudent.get(0).getSd_email();
+
+				txtsd_num.setText(selectedSd_num);
+				txtsd_name.setText(selectedSd_name);
+				txtsd_id.setText(selectedSd_id);
+				txtsd_passwd.setText(selectedSd_passwd);
+				txtsd_birthday.setText(selectedSd_birthday);
+				txtsd_phone.setText(selectedSd_phone);
+				txtsd_address.setText(selectedSd_address);
+				txtsd_email.setText(selectedSd_email);
+
+				txtsd_num.setEditable(false);
+				txtsd_name.setEditable(false);
+				txtsd_id.setEditable(false);
+
+				btnIdCheck.setDisable(true);
+				cbx_subjectName.setDisable(true);
+				btnStudentUpdate.setDisable(false);
+				btnStudentInit.setDisable(false);
+				btnStudentInsert.setDisable(true);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
-	private Object HandlerCbx_subjectNameAction(ActionEvent event) {
-		// TODO Auto-generated method stub
-		return null;
+	// 학생 아이디 중복 체크
+	public void handlerBtnIdCheckActio(ActionEvent event) {
+		btnStudentInsert.setDisable(false);
+		btnIdCheck.setDisable(true);
+
+		StudentDAO sDao = null;
+
+		String searchId = "";
+		boolean searchResult = true;
+
+		try {
+			searchId = txtsd_id.getText().trim();
+			sDao = new StudentDAO();
+			searchResult = (boolean) sDao.getStudentIdOverlap(searchId);
+			if (!searchResult && !searchId.equals("")) {
+				txtsd_id.setDisable(true);
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("아이디 중 복 검사");
+				alert.setHeaderText(searchId + "를 사용할 수 있습니다.");
+				alert.setContentText("패스워드를 입력하세요");
+				alert.showAndWait();
+
+				btnStudentInsert.setDisable(false);
+				btnIdCheck.setDisable(true);
+
+			} else if (searchId.equals("")) {
+				btnStudentInsert.setDisable(true);
+				btnIdCheck.setDisable(false);
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("아이디 중복 검색");
+				alert.setHeaderText("아이디를 입력하시오");
+				alert.setContentText("등록할 아이디를 입력하세요");
+				alert.showAndWait();
+			} else {
+				btnStudentInsert.setDisable(true);
+				btnIdCheck.setDisable(false);
+				txtsd_id.clear();
+
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("아이디 중복 검사");
+				alert.setHeaderText(searchId + "를 사용할 수 없습니다");
+				alert.setContentText("아이디를 다른것으로 입력하세요");
+				alert.showAndWait();
+
+				txtsd_id.requestFocus();
+			}
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("아이디 중복 검사 오류");
+			alert.setHeaderText("아이디 중복 검사에 오류가 발생하였습니다.");
+			alert.setContentText("다시하세요");
+			alert.showAndWait();
+		}
+
 	}
 
-	private Object handlerBtnStudentInsertAction(ActionEvent event) {
-		// TODO Auto-generated method stub
-		return null;
+	// 학생 등록 탭의 학과 선택 이벤트 핸들러
+	public void HandlerCbx_subjectNameAction(ActionEvent event) {
+		SubjectDAO sudao = new SubjectDAO();
+		StudentDAO sdao = new StudentDAO();
+		String serialNumber = ""; // 일련번호
+		String sdYear = "";
+
+		try {
+			selectSubjectNum = sudao.getSubjectNum(cbx_subjectName.getSelectionModel().getSelectedItem() + "");
+
+			// 학번은 8자리로 구성한다 (연도 2자리 +학과2자리 + 일련번호 4자리 - 예로06010001)
+			SimpleDateFormat sdf = new SimpleDateFormat("yy");
+			sdYear = sdf.format(new Date());
+
+			serialNumber = sdao.getStudentCount(selectSubjectNum);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		studentNumber = sdYear + selectSubjectNum + serialNumber;
+		txtsd_num.setText(studentNumber);
+
 	}
 
-	private void studentTotalList() {
-		// TODO Auto-generated method stub
+	// 학생 등록 이벤트 핸들러
+	public void handlerBtnStudentInsertAction(ActionEvent event) {
+		try {
+			studentDataList.removeAll(studentDataList);
 
+			StudentVO svo = null;
+
+			StudentDAO sdao = null;
+
+			svo = new StudentVO(txtsd_num.getText().trim(), txtsd_name.getText().trim(), txtsd_id.getText().trim(),
+					txtsd_passwd.getText().trim(), selectSubjectNum, txtsd_birthday.getText().trim(),
+					txtsd_phone.getText().trim(), txtsd_address.getText().trim(), txtsd_email.getText().trim());
+			sdao = new StudentDAO();
+			sdao.getStudentRegiste(svo);
+
+			if (sdao != null) {
+				studentTotalList();
+
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("학생 입력");
+				alert.setHeaderText(txtsd_name.getText() + "학생이 성공적으로 추가되었습니다.");
+				alert.setContentText("다음 학생을 입력하세요");
+				alert.showAndWait();
+
+				txtsd_num.clear();
+				selectSubjectNum = "";
+				txtsd_birthday.clear();
+				txtsd_phone.clear();
+				txtsd_address.clear();
+				txtsd_email.clear();
+				txtsd_name.requestFocus();
+
+			}
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("학과 정보 입력");
+			alert.setHeaderText("학과 정보를 정확히 입력하시오.");
+			alert.setContentText("다음에는 주의하세요");
+			alert.showAndWait();
+		}
 	}
 
+	// 학생 전체 목록
+	public void studentTotalList() throws Exception {
+		studentDataList.removeAll(studentDataList);
+		StudentDAO sDao = new StudentDAO();
+		StudentVO sVo = null;
+		ArrayList<String> title;
+		ArrayList<StudentVO> list;
+
+		title = sDao.getStudentColumnName();
+		int columnCount = title.size();
+
+		list = sDao.getStudentTotalList();
+		int rowCount = list.size();
+		for (int index = 0; index < rowCount; index++) {
+			sVo = list.get(index);
+			studentDataList.add(sVo);
+		}
+		// 추가된 학과명 호출
+		addSubjectName();
 	}
+
+}
