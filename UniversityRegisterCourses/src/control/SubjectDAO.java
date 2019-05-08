@@ -235,7 +235,11 @@ public class SubjectDAO {
 		return s_num;
 	}
 
+<<<<<<< HEAD
 	public boolean getSubjectDelete(int no){
+=======
+	public boolean getSubjectDelete(int no) throws Exception {
+>>>>>>> ed1576ff47c731cc7dc9f34cd6766c9eb76ccaa4
 		// TODO Auto-generated method stub
 		StringBuffer sql = new StringBuffer();
 		sql.append("delete from subject where no = ?");
