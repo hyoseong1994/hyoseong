@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TableView?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="control.StudetTabController" prefHeight="500"
+	fx:controller="control.StudentTabController" prefHeight="500"
 	prefWidth="1000">
 	<children>
 
