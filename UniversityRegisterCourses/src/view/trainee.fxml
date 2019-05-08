@@ -58,7 +58,7 @@
 									layoutY="120.0" />
 								<Label text="수강 과목 선택" layoutX="50.0" layoutY="172.0" />
 								<fx:define>
-								
+								<ToggleGroup fx:id="sectionGroup"
 								</fx:define>
 							</children>
 						</AnchorPane>
