@@ -64,7 +64,7 @@ public class TraineeTotalTabController implements Initializable {
 			TableColumn colTSection = new TableColumn("과목 구분");
 			colTSection.setPrefWidth(150);
 			colTSection.setStyle("-fx-allignment:CENTER");
-			colTSection.setCellValueFactory(new PropertyValueFactory<>("l_Section"));
+			colTSection.setCellValueFactory(new PropertyValueFactory<>("t_Section"));
 
 			TableColumn colTDate = new TableColumn("등록 날짜");
 			colTDate.setPrefWidth(250);
@@ -165,7 +165,7 @@ public class TraineeTotalTabController implements Initializable {
 	}
 
 	// 수강 전체 리스트
-	public void traineeTotalList() {
+	public void traineeTotalList() throws Exception{
 		// TODO Auto-generated method stub
 		traineeDataList.removeAll(traineeDataList);
 
