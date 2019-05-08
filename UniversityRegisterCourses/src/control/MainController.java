@@ -36,7 +36,7 @@ public class MainController implements Initializable {
 	@FXML
 	private LessonTabController lessonTabController;
 	@FXML
-	private Tab TraineeTotal;
+	private Tab traineeTotal;
 	@FXML
 	private TraineeTotalController traineeTotalController;
 
@@ -67,21 +67,21 @@ public class MainController implements Initializable {
 						}
 					} else if (newValue == student) {
 						try {
-							studentTabController.subjectTotalList();
+							studentTabController.studentTotalList();
 						} catch (Exception e) {
 							// TODO: handle exception
 							e.printStackTrace();
 						}
 					} else if (newValue == lesson) {
 						try {
-							lessonTabController.subjectTotalList();
+							lessonTabController.lessonTotalList();
 						} catch (Exception e) {
 							// TODO: handle exception
 							e.printStackTrace();
 						}
 					} else if (newValue == traineeTotal) {
 						try {
-							traineeTotalController.subjectTotalList();
+							traineeTotalController.traineeTotalList();
 						} catch (Exception e) {
 							// TODO: handle exception
 							e.printStackTrace();
@@ -103,7 +103,6 @@ public class MainController implements Initializable {
 	public void handlermenuLogoutAction(ActionEvent event) {
 		// TODO Auto-generated method stub
 		try {
-			studentId = txtId.getText();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
 			Parent mainView = (Parent) loader.load();
 			Scene scene = new Scene(mainView);
