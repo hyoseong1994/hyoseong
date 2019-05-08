@@ -28,7 +28,7 @@
 					</menus>
 					<Menu text="도움말">
 						<items>
-							<MenuItem text="프로그램 정보" fx:id="meunInfo">
+							<MenuItem text="프로그램 정보" fx:id="menuInfo">
 							</MenuItem>
 						</items>
 					</Menu>
