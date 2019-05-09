@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -7,8 +8,8 @@
 <?import javafx.scene.control.TableView?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="cotrol.SubjectTabController" prefHeight="500"
-	prefWidth="700">
+	fx:controller="cotrol.SubjectTabController" prefHeight="500" 
+prefWidth="700">
 	<!-- TODO Add Nodes -->
 	<children>
 		<Label text="학과 등록" layoutX="50.0" layoutY="30.0" />

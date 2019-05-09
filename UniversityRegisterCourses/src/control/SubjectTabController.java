@@ -1,8 +1,6 @@
 package control;
 
-import java.beans.PropertyChangeEvent;
 import java.net.URL;
-import java.nio.channels.SeekableByteChannel;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -22,7 +20,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import model.StudentVO;
 import model.SubjectVO;
 
 public class SubjectTabController implements Initializable {

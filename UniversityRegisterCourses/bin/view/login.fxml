@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="310.0" prefWidth="400.0"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="control.loginController">
+	fx:controller="control.LoginController">
 	<!-- TODO Add Nodes -->
 	<VBox alignment="CENTER">
 		<padding>
@@ -24,7 +24,7 @@
 			<Label text="관리자 로그인" fx:id="lblLogin" />
 			<HBox alignment="CENTER">
 				<ImageView pickOnBounds="true" preserveRatio="true"
-					fx:id="iconImg">
+					fx:id="IconImg">
 					<image>
 						<Image url="@../image/manager.png" />
 					</image>
