@@ -12,7 +12,7 @@ public class Main extends Application {
 		try {
 
 
-			Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/view/studentTab.fxml"));
 			Scene scene = new Scene(root);
 
 			primaryStage.setTitle("미래 대학교 수강신청");

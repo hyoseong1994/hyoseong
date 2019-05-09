@@ -16,7 +16,7 @@ public class StudentDAO {
 	// 로그인 학생이름
 
 	public String getLoginName(String loginId) throws Exception {
-		String sql = "select sd_name from student where sd_id=?";
+		String sql = "select sd_name from student where sd_id = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -52,7 +52,7 @@ public class StudentDAO {
 
 	// 학생 로그인
 	public boolean getLogin(String loginId, String loginPassword) throws Exception {
-		String sql = "select * from student where sd_id=? and sd_passwd = ?";
+		String sql = "select * from student where sd_id = ? and sd_passwd = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -91,9 +91,9 @@ public class StudentDAO {
 	public ArrayList<StudentVO> getStudentTotalList() throws Exception {
 		ArrayList<StudentVO> list = new ArrayList<>();
 
-		String sql = "select st.no as no,sd_num , sd_name , sd_id, sd_passwd, su.s_name as s_num, "
-				+ "sd_birthday,sd_phone,sd_address ,sd_email , sd_date" + "from STUDENT st, SUBECT su"
-				+ "where st.s_num=su.s_num" + "order by no";
+		String sql = "select st.no as no, sd_num, sd_name, sd_id, sd_passwd, su.s_name as s_num, "
+				+ "sd_birthday, sd_phone, sd_address, sd_email, sd_date " + " from STUDENT st, SUBJECT su"
+				+ " where st.s_num = su.s_num" + " order by no";
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -142,7 +142,7 @@ public class StudentDAO {
 
 	// 동일 학과 학생 일련번호
 	public String getStudentCount(String subejectNum) throws Exception {
-		String sql = "select LPAD(count(*)+1,4,'0') as studentCount from student where s_num=?";
+		String sql = "select LPAD(count(*)+1, 4,'0') as studentCount from student where s_num = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
