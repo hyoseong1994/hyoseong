@@ -1,6 +1,5 @@
 package control;
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,16 +18,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.StudentVO;
 import model.TraineeVO;
 
-public class TraineeController implements Initializable{
-	//메뉴
+public class TraineeController implements Initializable {
+	// 메뉴
 	@FXML
 	private MenuItem menuExit;
 	@FXML
 	private MenuItem menuLogout;
 	@FXML
 	private MenuItem menuInfo;
-	
-	//수강 신청 탭
+
+	// 수강 신청 탭
 	@FXML
 	private TextField txtStudentName;
 	@FXML
@@ -51,44 +50,43 @@ public class TraineeController implements Initializable{
 	private Button btnTraineeExit;
 	@FXML
 	private TableView<TraineeVO> traineeTableView = new TableView<>();
-	
-	
+
 	ObservableList<TraineeVO> traineeDataList = FXCollections.observableArrayList();
 	ObservableList<TraineeVO> selectTrainee = null; // 테이블에서 선택한 정보 저장
-	int selectedTraineeIndex; //테이블에서 선택한 수강 신청 인덱스 저장
-	
-	String studentLoginId;//로그인 아이디
-	String l_num;//과목 번호
-	String t_section;//과목 구분
-	String sd_num;//로그인한 학생의 학번
-	
+	int selectedTraineeIndex; // 테이블에서 선택한 수강 신청 인덱스 저장
+
+	String studentLoginId;// 로그인 아이디
+	String l_num;// 과목 번호
+	String t_section;// 과목 구분
+	String sd_num;// 로그인한 학생의 학번
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		try {
 			studentLoginId = LoginController.studentId;
-			
+
 			if (!studentLoginId.equals("")) {
 				StudentVO sVo = new StudentVO();
 				TraineeDAO tDao = new TraineeDAO();
 				sVo = tDao.getStudentSubjectName(studentLoginId);
-				
+
 				txtStudentNum.setText(sVo.getSd_num());
 				txtStudentName.setText(sVo.getSd_name());
 				txtSubjectName.setText(sVo.getS_num());
-				
+
 				sd_num = txtStudentNum.getText().trim();
-				
+
 				btnTraineeCancel.setDisable(true);
 				traineeTableView.setEditable(false);
-				
-				//학생 정보 수정 금지
+
+				// 학생 정보 수정 금지
 				txtStudentName.setEditable(false);
 				txtStudentNum.setEditable(false);
 				txtSubjectName.setEditable(false);
 				txtSectionName.setEditable(false);
-				
-				//수강 테이블 뷰 칼럼이름 설정
+
+				// 수강 테이블 뷰 칼럼이름 설정
 				TableColumn colNo = new TableColumn("NO.");
 				colNo.setPrefWidth(50);
 				colNo.setStyle("fx-allignment:CENTER");
@@ -115,19 +113,18 @@ public class TraineeController implements Initializable{
 				colTDate.setCellValueFactory(new PropertyValueFactory<>("t_date"));
 
 				traineeTableView.setItems(traineeDataList);
-				traineeTableView.getColumns().addAll(colNo, colSdNum, colLNum, 
-						colTSection, colTDate);
+				traineeTableView.getColumns().addAll(colNo, colSdNum, colLNum, colTSection, colTDate);
 
 				// 수강 전체 목록
 				traineeTotalList();
 
-				//메뉴 이벤트 등록
+				// 메뉴 이벤트 등록
 				menuExit.setOnAction(event -> handlerMenuExitAction(event));
 				menuLogout.setOnAction(event -> handlerMenuLogoutAction(event));
 				menuInfo.setOnAction(event -> handlermenuInfoAction(event));
-				//수강 과목 선택 이벤트
-				
-				//수강 등록, 삭제 이벤트 등록
+				// 수강 과목 선택 이벤트
+
+				// 수강 등록, 삭제 이벤트 등록
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -151,17 +148,7 @@ public class TraineeController implements Initializable{
 
 	public void traineeTotalList() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
