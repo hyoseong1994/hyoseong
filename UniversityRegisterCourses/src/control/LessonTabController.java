@@ -183,7 +183,7 @@ public class LessonTabController implements Initializable {
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("과목 정보 입력");
-			alert.setHeaderText("과목 정보를 wjdghkrgl 입력하시오");
+			alert.setHeaderText("과목 정보를 정확히 입력하시오");
 			alert.setContentText("다음에는 주의하세요");
 			alert.showAndWait();
 		}
@@ -216,6 +216,7 @@ public class LessonTabController implements Initializable {
 		int rowCount = title.size();
 
 		for (int index = 0; index < rowCount; index++) {
+
 			lVo = list.get(index);
 			lessonDataList.add(lVo);
 		}

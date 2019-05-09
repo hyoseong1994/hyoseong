@@ -11,8 +11,12 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 
+<<<<<<< HEAD
 
 			Parent root = FXMLLoader.load(getClass().getResource("/view/studentTab.fxml"));
+=======
+			Parent root = FXMLLoader.load(getClass().getResource("/view/lessonTab.fxml"));
+>>>>>>> a3b91fb5f2f61d66df114b88d95580ab95fe49f1
 			Scene scene = new Scene(root);
 
 			primaryStage.setTitle("미래 대학교 수강신청");

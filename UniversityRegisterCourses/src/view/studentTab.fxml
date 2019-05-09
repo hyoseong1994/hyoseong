@@ -62,6 +62,11 @@
 			layoutY="25.0" />
 		<TableView fx:id="studentTableView" layoutX="300.0"
 			layoutY="55.0" prefHeight="370" prefWidth="700"></TableView>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> a3b91fb5f2f61d66df114b88d95580ab95fe49f1
 	</children>
 </AnchorPane>
 
