@@ -8,11 +8,15 @@ import javafx.scene.Scene;
 
 public class Main extends Application {
 	@Override
-	public void start(
-			Stage primaryStage) { 
+	public void start(Stage primaryStage) {
 		try {
 
+<<<<<<< HEAD
 			Parent root = FXMLLoader.load(getClass().getResource("/view/studentTab.fxml"));
+=======
+			Parent root = FXMLLoader.load(getClass().getResource("/view/lessonTab.fxml"));
+
+>>>>>>> 573620b3f1168000ba53883df046c828973cca32
 			Scene scene = new Scene(root);
 
 			primaryStage.setTitle("미래 대학교 수강신청");
@@ -24,6 +28,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}
