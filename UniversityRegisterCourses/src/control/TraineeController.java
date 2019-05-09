@@ -1,20 +1,28 @@
 package control;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.StudentVO;
 import model.TraineeVO;
 
@@ -131,24 +139,59 @@ public class TraineeController implements Initializable {
 		}
 	}
 
-	private Object handlermenuInfoAction(ActionEvent event) {
+	
+
+	public void handlerMenuLogoutAction(ActionEvent event) {
 		// TODO Auto-generated method stub
-		return null;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
+			Parent mainView = (Parent) loader.load();
+			Scene scene = new Scene(mainView);
+			Stage mainMtage = new Stage();
+			mainMtage.setTitle("미래 대학교 학사관리");
+			mainMtage.setScene(scene);
+			Stage oldStage = (Stage) btnTraineeExit.getScene().getWindow();
+			oldStage.close();
+			mainMtage.show();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	public void handlermenuInfoAction(ActionEvent event) {
+		// TODO Auto-generated method stub
+		Alert alert;
+		alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("미래 대학교");
+		alert.setHeaderText("미래 대학교 수강신청 프로그램.");
+		alert.setContentText("Future Universit Register Courses Version 0.01");
+		alert.setResizable(false);
+		alert.showAndWait();
 	}
 
-	private Object handlerMenuLogoutAction(ActionEvent event) {
+	public void handlerMenuExitAction(ActionEvent event) {
 		// TODO Auto-generated method stub
-		return null;
+		Platform.exit();
 	}
 
-	private Object handlerMenuExitAction(ActionEvent event) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void traineeTotalList() {
+	public void traineeTotalList() throws Exception {
 		// TODO Auto-generated method stub
 
+		TraineeDAO tDao = new TraineeDAO();
+		TraineeVO tVo = null;
+		ArrayList<String> title;
+		ArrayList<TraineeVO> list;
+
+		title = tDao.getTraineeColumnName();
+		int columnCount = title.size();
+
+		list = tDao.getTraineeTotalList(sd_num);
+		int rowCount = list.size();
+
+		for (int index = 0; index < rowCount; index++) {
+			tVo = list.get(index);
+			traineeDataList.add(tVo);
+		}
 	}
 
 }
