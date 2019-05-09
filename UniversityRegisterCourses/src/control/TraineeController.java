@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -22,7 +23,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+<<<<<<< HEAD
 import javafx.stage.Stage;
+=======
+import javafx.scene.input.MouseEvent;
+>>>>>>> 70c13283e08aa7a3f2b70d41550ead0e093a1831
 import model.StudentVO;
 import model.TraineeVO;
 
@@ -48,6 +53,8 @@ public class TraineeController implements Initializable {
 	private RadioButton rbMinor;
 	@FXML
 	private RadioButton rbCulture;
+	@FXML
+	private ComboBox<String> cbx_subjectName;
 	@FXML
 	private TextField txtSectionName;
 	@FXML
@@ -131,14 +138,41 @@ public class TraineeController implements Initializable {
 				menuLogout.setOnAction(event -> handlerMenuLogoutAction(event));
 				menuInfo.setOnAction(event -> handlermenuInfoAction(event));
 				// 수강 과목 선택 이벤트
+				rbMajor.setOnAction(event -> handlerRbMajorAction(event));
+				rbMinor.setOnAction(event -> hanlderRbMinorAction(event));
+				rbCulture.setOnAction(event -> handlerRbCultureAction(event));
+				cbx_subjectName.setOnAction(event -> handlerCbx_subjectNameAction(event));
 
 				// 수강 등록, 삭제 이벤트 등록
+				btnTraineeInsert.setOnAction(event -> handlerBtnTraineeInsertAction(event));
+				btnTraineeCancel.setOnAction(event -> handlerBtnTraineeCancelAction(event));
+
+				btnTraineeExit.setOnAction(event -> hanlderBtnTraineeExitAction(event));
+				traineeTableView.setOnMouseClicked(event -> handlerTraineeTableViewAction(event));
+
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
+	
+	//수강 테이블 더블클릭 선택 
+	public void handlerTraineeTableViewAction(MouseEvent event) {
+		
+	}
+	//종료버튼
+	public void hanlderBtnTraineeExitAction(ActionEvent event) {
+	//취소버튼	
+	}
+	public void handlerBtnTraineeCancelAction(ActionEvent event) {
+	//추가버튼
+	}
+	public void handlerBtnTraineeInsertAction(ActionEvent event) {
+		
+	}
+	// 수강 과목 선택 이벤트 핸들러
 
+<<<<<<< HEAD
 	
 
 	public void handlerMenuLogoutAction(ActionEvent event) {
@@ -176,6 +210,56 @@ public class TraineeController implements Initializable {
 
 	public void traineeTotalList() throws Exception {
 		// TODO Auto-generated method stub
+=======
+	public void handlerCbx_subjectNameAction(ActionEvent event) {
+		txtSectionName.setText(cbx_subjectName.getSelectionModel().getSelectedItem());
+		selectLessonNameToLessonNum();
+	}
+
+	public void handlerRbCultureAction(ActionEvent event) {
+		cbx_subjectName.setItems(FXCollections.observableArrayList("국어", "수학", "영어", "역사"));
+		t_section = rbCulture.getText();
+	}
+
+	public void hanlderRbMinorAction(ActionEvent event) {
+		cbx_subjectName.setItems(FXCollections.observableArrayList("교육학이론"));
+		t_section = rbMinor.getText();
+	}
+
+	public void handlerRbMajorAction(ActionEvent event) {
+		cbx_subjectName.setItems(FXCollections.observableArrayList("프로그래밍", "데이터베이스"));
+		t_section = rbMinor.getText();
+	}
+
+	// 수강 신청한 과목의 과목 번호
+	private void selectLessonNameToLessonNum() {
+		try {
+			TraineeDAO tDao = new TraineeDAO();
+			if (txtSectionName.getText() != null) {
+				l_num = tDao.getLessonNum(txtSectionName.getText());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void handlermenuInfoAction(ActionEvent event) {
+		
+	}
+
+	private Object handlerMenuLogoutAction(ActionEvent event) {
+	
+
+	}
+
+	public Object handlerMenuExitAction(ActionEvent event) {
+		
+	}
+
+	public void traineeTotalList() {
+		
+>>>>>>> 70c13283e08aa7a3f2b70d41550ead0e093a1831
 
 		TraineeDAO tDao = new TraineeDAO();
 		TraineeVO tVo = null;
