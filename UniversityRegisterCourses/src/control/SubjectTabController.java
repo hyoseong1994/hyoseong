@@ -157,10 +157,12 @@ public class SubjectTabController implements Initializable {
 		try {
 			subjectDataList.removeAll(subjectDataList);
 
-			SubjectDAO sdao = null;
 			SubjectVO svo = null;
+			SubjectDAO sdao = null;
+			
 
 			svo = new SubjectVO(txtSubjectNum.getText().trim(), txtSubjectName.getText().trim());
+			sdao = new SubjectDAO();
 			sdao.getSubjectRegiste(svo);
 
 			if (sdao != null) {
