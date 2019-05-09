@@ -153,24 +153,6 @@ public class TraineeController implements Initializable {
 		}
 	}
 
-	// 수강 테이블 더블클릭 선택
-	public void handlerTraineeTableViewAction(MouseEvent event) {
-
-	}
-
-	// 종료버튼
-	public void hanlderBtnTraineeExitAction(ActionEvent event) {
-		// 취소버튼
-	}
-
-	public void handlerBtnTraineeCancelAction(ActionEvent event) {
-		// 추가버튼
-	}
-
-	public void handlerBtnTraineeInsertAction(ActionEvent event) {
-
-	}
-
 	public void handlerCbx_subjectNameAction(ActionEvent event) {
 		txtSectionName.setText(cbx_subjectName.getSelectionModel().getSelectedItem());
 		selectLessonNameToLessonNum();
@@ -202,6 +184,72 @@ public class TraineeController implements Initializable {
 			e.printStackTrace();
 		}
 
+	}
+
+	// 수강 신청버튼
+	public void handlerBtnTraineeInsertAction(ActionEvent event) {
+		try {
+			traineeDataList.removeAll(traineeDataList);
+
+			TraineeVO tvo = null;
+			TraineeDAO tdao = null;
+
+			tvo = new TraineeVO(txtStudentNum.getText().trim(), l_num, t_section);
+			tdao = new TraineeDAO();
+			tdao.getTraineeRegiste(tvo);
+
+			if (tdao != null) {
+				traineeTotalList();
+
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("수강신청");
+				alert.setHeaderText(txtStudentName.getText() + "수강 신청이 되었습니다.");
+				alert.setContentText("다른 과목 수강 신청을 하세요");
+				alert.showAndWait();
+
+				txtSectionName.clear();
+				l_num = "";
+				t_section = "";
+				rbCulture.setSelected(false);
+				rbMajor.setSelected(false);
+				rbMinor.setSelected(false);
+				cbx_subjectName.setItems(FXCollections.observableArrayList("선택"));
+			}
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("학과 정보 입력");
+			alert.setHeaderText("학과 정보를 정확히 입력하시오");
+			alert.setContentText("다음에는 주의하세요");
+			alert.showAndWait();
+		}
+	}
+
+	// 수강 신청 취소버튼
+	public void handlerBtnTraineeCancelAction(ActionEvent event) {
+		try {
+			boolean sucess;
+
+			TraineeDAO tdao = new TraineeDAO();
+			sucess = tdao.getTraineeDelete(selectedTraineeIndex);
+			if (sucess) {
+				traineeDataList.remove(traineeDataList);
+				traineeTotalList();
+
+				btnTraineeCancel.setDisable(true);
+				btnTraineeInsert.setDisable(false);
+
+				txtSectionName.clear();
+				l_num = "";
+				t_section = "";
+				rbCulture.setSelected(false);
+				rbMajor.setSelected(false);
+				rbMinor.setSelected(false);
+				cbx_subjectName.setItems(FXCollections.observableArrayList("선택"));
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	// 수강 과목 선택 이벤트 핸들러
@@ -238,6 +286,32 @@ public class TraineeController implements Initializable {
 		// TODO Auto-generated method stub
 		Platform.exit();
 	}
+
+	// 종료버튼
+	public void hanlderBtnTraineeExitAction(ActionEvent event) {
+		Platform.exit();
+	}
+
+	// 수강 테이블 더블클릭 선택
+	public void handlerTraineeTableViewAction(MouseEvent event) {
+		if (event.getClickCount() == 2) {
+			try {
+				selectTrainee = traineeTableView.getSelectionModel().getSelectedItems();
+				selectedTraineeIndex = selectTrainee.get(0).getNo();
+				String selectedL_num = selectTrainee.get(0).getL_num();
+
+				txtSectionName.setText(selectedL_num);
+				btnTraineeCancel.setDisable(false);
+				btnTraineeInsert.setDisable(true);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	// 수강 전체 리스트
 
 	public void traineeTotalList() throws Exception {
 
