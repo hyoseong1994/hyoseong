@@ -21,19 +21,19 @@ public class LessonDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		LessonVO IVo = null;
+		LessonVO lVo = null;
 
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				IVo = new LessonVO();
-				IVo.setNo(rs.getInt("no"));
-				IVo.setL_num(rs.getString("I_num"));
-				IVo.setL_name(rs.getString("I_name"));
+				lVo = new LessonVO();
+				lVo.setNo(rs.getInt("no"));
+				lVo.setL_num(rs.getString("l_num"));
+				lVo.setL_name(rs.getString("l_name"));
 
-				list.add(IVo);
+				list.add(lVo);
 
 			}
 

@@ -31,7 +31,7 @@ prefWidth="700">
 		<Button fx:id="btnRead" layoutX="200.0" layoutY="150.0"
 			text="읽기" />
 		<Label text="학과 목록" layoutX="350.0" layoutY="30.0" />
-		<TableView fx:id="subjectTableView" layoutX="350.0"
+		<TableView fx:id="SubjectTableView" layoutX="350.0"
 			layoutY="50.0" prefHeight="370" prefWidth="300">
 		</TableView>
 	</children>
