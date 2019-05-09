@@ -62,8 +62,6 @@
 			layoutY="25.0" />
 		<TableView fx:id="studentTableView" layoutX="300.0"
 			layoutY="55.0" prefHeight="370" prefWidth="700"></TableView>
-
-
 	</children>
 </AnchorPane>
 
