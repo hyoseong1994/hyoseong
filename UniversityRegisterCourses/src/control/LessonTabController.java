@@ -137,7 +137,7 @@ public class LessonTabController implements Initializable {
 			sucess = ldao.getLessonDelete(selectedLessonIndex);
 
 			if (sucess) {
-				lessonDataList.remove(lessonDataList);
+				lessonDataList.removeAll(lessonDataList);
 
 				lessonTotalList();
 

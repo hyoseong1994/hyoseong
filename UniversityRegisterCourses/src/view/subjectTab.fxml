@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TableView?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="cotrol.SubjectTabController" prefHeight="500" 
+	fx:controller="control.SubjectTabController" prefHeight="500" 
 prefWidth="700">
 	<!-- TODO Add Nodes -->
 	<children>

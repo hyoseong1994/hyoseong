@@ -22,7 +22,7 @@
 			text="등록" />
 		<Button fx:id="btnLessonUpdate" layoutX="100.0" layoutY="150.0"
 			text="수정" />
-		<Button fx:id="btnLessonDelte" layoutX="150.0" layoutY="150.0"
+		<Button fx:id="btnLessonDelete" layoutX="150.0" layoutY="150.0"
 			text="삭제" />
 		<Label text="과목 목록" layoutX="350.0" layoutY="30.0" />
 		<TableView fx:id="lessonTableView" layoutX="350.0"
