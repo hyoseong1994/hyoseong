@@ -260,9 +260,4 @@ public class SubjectTabController implements Initializable {
 		}
 	}
 
-	public void subjectTotalList() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
