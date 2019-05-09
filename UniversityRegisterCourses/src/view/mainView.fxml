@@ -8,16 +8,12 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
 
-<<<<<<< HEAD
-<BorderPane xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="control.MainController" prefHeight="500.0" prefWidth="1000.0">
-	<!-- TODO Add Nodes -->
-=======
-<BorderPane prefWidth="1000" prefHeight="500"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="control.MainController">
 
->>>>>>> 573620b3f1168000ba53883df046c828973cca32
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="control.MainController" prefHeight="500.0"
+	prefWidth="1000.0">
+	<!-- TODO Add Nodes -->
+
 	<top>
 		<VBox>
 			<children>

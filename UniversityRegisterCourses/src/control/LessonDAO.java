@@ -17,7 +17,7 @@ public class LessonDAO {
 	public ArrayList<LessonVO> getLessonTotalList() throws Exception {
 		ArrayList<LessonVO> list = new ArrayList<>();
 
-		String sql = "select*from lesson order by no";
+		String sql = "select * from lesson order by no";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
