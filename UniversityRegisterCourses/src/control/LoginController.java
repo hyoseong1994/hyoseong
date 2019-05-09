@@ -104,6 +104,7 @@ public class LoginController implements Initializable {
 		}
 	}
 
+	//관리자 등록창으로 전환
 	public void handlerBtnJoinAction(ActionEvent event) {
 		// TODO Auto-generated method stub
 		try {
@@ -122,16 +123,19 @@ public class LoginController implements Initializable {
 		}
 	}
 
+	//로그인창 닫기
 	public void handlerBtnCancelAction(ActionEvent event) {
 		// TODO Auto-generated method stub
 		Platform.exit();
 	}
 
+	//로그인
 	public void handlerBtnLoginAction(ActionEvent event) {
 		// TODO Auto-generated method stub
 		login();
 	}
 
+	//로그인 메소드
 	public void login() {
 		// TODO Auto-generated method stub
 		LoginDAO login = new LoginDAO();
