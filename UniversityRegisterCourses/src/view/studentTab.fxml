@@ -61,7 +61,11 @@
 		<Button fx:id="btnStudentTatoList" text="학생 전체" layoutX="360.0"
 			layoutY="25.0" />
 		<TableView fx:id="studentTableView" layoutX="300.0"
+<<<<<<< HEAD
+			layoutY="55.0" prefHeight="370" prefWidth="700"></TableView>
+=======
 			layoutY="55.0" prefHeight="370" prefWidth="700"/>
+>>>>>>> 573620b3f1168000ba53883df046c828973cca32
 
 	</children>
 </AnchorPane>
