@@ -23,11 +23,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-<<<<<<< HEAD
 import javafx.stage.Stage;
-=======
 import javafx.scene.input.MouseEvent;
->>>>>>> 70c13283e08aa7a3f2b70d41550ead0e093a1831
 import model.StudentVO;
 import model.TraineeVO;
 
@@ -155,62 +152,25 @@ public class TraineeController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
-	//수강 테이블 더블클릭 선택 
+
+	// 수강 테이블 더블클릭 선택
 	public void handlerTraineeTableViewAction(MouseEvent event) {
-		
+
 	}
-	//종료버튼
+
+	// 종료버튼
 	public void hanlderBtnTraineeExitAction(ActionEvent event) {
-	//취소버튼	
+		// 취소버튼
 	}
+
 	public void handlerBtnTraineeCancelAction(ActionEvent event) {
-	//추가버튼
+		// 추가버튼
 	}
+
 	public void handlerBtnTraineeInsertAction(ActionEvent event) {
-		
-	}
-	// 수강 과목 선택 이벤트 핸들러
 
-<<<<<<< HEAD
-	
-
-	public void handlerMenuLogoutAction(ActionEvent event) {
-		// TODO Auto-generated method stub
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
-			Parent mainView = (Parent) loader.load();
-			Scene scene = new Scene(mainView);
-			Stage mainMtage = new Stage();
-			mainMtage.setTitle("미래 대학교 학사관리");
-			mainMtage.setScene(scene);
-			Stage oldStage = (Stage) btnTraineeExit.getScene().getWindow();
-			oldStage.close();
-			mainMtage.show();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-	}
-	public void handlermenuInfoAction(ActionEvent event) {
-		// TODO Auto-generated method stub
-		Alert alert;
-		alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("미래 대학교");
-		alert.setHeaderText("미래 대학교 수강신청 프로그램.");
-		alert.setContentText("Future Universit Register Courses Version 0.01");
-		alert.setResizable(false);
-		alert.showAndWait();
 	}
 
-	public void handlerMenuExitAction(ActionEvent event) {
-		// TODO Auto-generated method stub
-		Platform.exit();
-	}
-
-	public void traineeTotalList() throws Exception {
-		// TODO Auto-generated method stub
-=======
 	public void handlerCbx_subjectNameAction(ActionEvent event) {
 		txtSectionName.setText(cbx_subjectName.getSelectionModel().getSelectedItem());
 		selectLessonNameToLessonNum();
@@ -244,22 +204,42 @@ public class TraineeController implements Initializable {
 
 	}
 
+	// 수강 과목 선택 이벤트 핸들러
+	public void handlerMenuLogoutAction(ActionEvent event) {
+		// TODO Auto-generated method stub
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
+			Parent mainView = (Parent) loader.load();
+			Scene scene = new Scene(mainView);
+			Stage mainMtage = new Stage();
+			mainMtage.setTitle("미래 대학교 학사관리");
+			mainMtage.setScene(scene);
+			Stage oldStage = (Stage) btnTraineeExit.getScene().getWindow();
+			oldStage.close();
+			mainMtage.show();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
 	public void handlermenuInfoAction(ActionEvent event) {
-		
+		// TODO Auto-generated method stub
+		Alert alert;
+		alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("미래 대학교");
+		alert.setHeaderText("미래 대학교 수강신청 프로그램.");
+		alert.setContentText("Future Universit Register Courses Version 0.01");
+		alert.setResizable(false);
+		alert.showAndWait();
 	}
 
-	private Object handlerMenuLogoutAction(ActionEvent event) {
-	
-
+	public void handlerMenuExitAction(ActionEvent event) {
+		// TODO Auto-generated method stub
+		Platform.exit();
 	}
 
-	public Object handlerMenuExitAction(ActionEvent event) {
-		
-	}
-
-	public void traineeTotalList() {
-		
->>>>>>> 70c13283e08aa7a3f2b70d41550ead0e093a1831
+	public void traineeTotalList() throws Exception {
 
 		TraineeDAO tDao = new TraineeDAO();
 		TraineeVO tVo = null;
